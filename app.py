@@ -11,14 +11,7 @@ from myfunctions import compute_morganfps
 from myfunctions import morgan_csv, rfc_csv_result
 from myfunctions import format_smiles
 
-from werkzeug.utils import secure_filename
-from datetime import datetime
 
-ALLOWED_EXTENSIONS = set(['csv'])
-
-def allowed_file(filename):
-    return '.' in filename and \
-            filename.replit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def create_model(type):
     if type == "GBM":
