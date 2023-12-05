@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>result</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_result.css') }}">
+</head>
+
+
+<body>
+
+    <div class = "header">
+        <h2>VP16i-finder</h2>
+
+        <div class="topnav">
+            <a href="/">Home</a>
+            <a href="/upload">Upload</a>
+            <a href="#about">Tutorials</a>
+        </div>
+    </div>
+    <hr>
+
+    <h1>Results</h1>
+
+    <div class = "content">
+        <div class="buttons">
+            <a href = "/upload" class="btn">Back</a>
+            <a class="btn" id="downloadBtn">Download</a>
+          </div>
+        
+          <div class = "table_container">
+              <table id = "dataTable">
+                  <tr>
+                      <th>Compound SMILE</th>
+                      <th>Activity</th>
+                      <th>Confidence Level</th>
+                  </tr>
+                  <tr>
+                      <td class = "truncate">{{smile}}</td>
+                      <td>{{activity}}</td>
+                      <td>{{confidence}}</td>
+                  </tr>
+              </table>
+          </div>
+      
+          <div class = "image">
+              <!--<img src="data:image/png;base64,{{ img_data }}" alt="2D Structure">-->
+              <img src="{{ url_for('static', filename='Image/mol_image.png') }}">
+      
+          </div>
+    </div>
+
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+          var csv = [];
+          var rows = document.querySelectorAll('#dataTable tr');
+          rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll('td');
+            cells.forEach(function(cell) {
+              rowData.push(cell.textContent);
+            });
+            csv.push(rowData.join(','));
+          });
+        
+          // Create a Blob and download link
+          var csvText = csv.join('\n');
+          var blob = new Blob([csvText], { type: 'text/csv' });
+          var a = document.createElement('a');
+          a.href = window.URL.createObjectURL(blob);
+          a.download = 'tableData.csv';
+          a.click();
+        });
+        </script>
+</body>
+</html>
