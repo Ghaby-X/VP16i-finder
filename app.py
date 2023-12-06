@@ -99,5 +99,9 @@ def results_csv():
     else:
         return "Method not allowed"
 
+@app.route("/tutorial", methods = ['Post', 'Get'])
+def tutorials():
+    return render_template("tutorial.html")
+
 if __name__ == '__main__':
     app.run()
