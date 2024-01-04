@@ -52,4 +52,18 @@ body {
     margin: auto;
 }
     
-    
+img {
+    width: 95%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+hr {
+    margin-top: 2px;
+}
