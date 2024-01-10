@@ -27,7 +27,7 @@
     <div class = "content">
         <div class="buttons">
             <a href = "/upload" class="btn">Back</a>
-            <a class="btn" id="downloadBtn">Download</a>
+            <button class="btn" onclick="downloadCSV()">Download CSV</button>
           </div>
         
           <div class = "table_container">
@@ -54,26 +54,35 @@
 
 
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-          var csv = [];
-          var rows = document.querySelectorAll('#dataTable tr');
-          rows.forEach(function(row) {
-            var rowData = [];
-            var cells = row.querySelectorAll('td');
-            cells.forEach(function(cell) {
-              rowData.push(cell.textContent);
+        function downloadCSV() {
+           var table = document.getElementById('dataTable');
+
+           // Generate CSV content
+            var csvContent = [];
+            var rows = table.querySelectorAll('tr');
+
+            rows.forEach(function (row) {
+                var rowData = [];
+                var cols = row.children;
+
+                for (var i = 0; i < cols.length; i++) {
+                    rowData.push(cols[i].innerText);
+                }
+
+                csvContent.push(rowData.join(','));
             });
-            csv.push(rowData.join(','));
-          });
-        
-          // Create a Blob and download link
-          var csvText = csv.join('\n');
-          var blob = new Blob([csvText], { type: 'text/csv' });
-          var a = document.createElement('a');
-          a.href = window.URL.createObjectURL(blob);
-          a.download = 'tableData.csv';
-          a.click();
-        });
-        </script>
+
+            var csvData = csvContent.join('\n');
+
+            // Create a Blob object and initiate the download
+            var blob = new Blob([csvData], { type: 'text/csv' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'result.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
 </body>
 </html>

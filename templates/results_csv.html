@@ -27,12 +27,45 @@
     <div class = "content">
         <div class="buttons">
             <a href = "/upload" class="btn">Back</a>
-            <a class="btn" id="downloadBtn">Download</a>
+            <button class="btn" onclick="downloadCSV()">Download CSV</button>
           </div>
         
           <div class = "table_container">
               {{df_html | safe}}
           </div>
-      
-          
     </div>
+
+    <script>
+        function downloadCSV() {
+           var table_container = document.querySelector('.table_container')
+           var table = table_container.querySelector('table')
+
+           // Generate CSV content
+            var csvContent = [];
+            var rows = table.querySelectorAll('tr');
+
+            rows.forEach(function (row) {
+                var rowData = [];
+                var cols = row.children;
+
+                for (var i = 0; i < cols.length; i++) {
+                    rowData.push(cols[i].innerText);
+                }
+
+                csvContent.push(rowData.join(','));
+            });
+
+            var csvData = csvContent.join('\n');
+
+            // Create a Blob object and initiate the download
+            var blob = new Blob([csvData], { type: 'text/csv' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'result.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
