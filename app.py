@@ -104,16 +104,10 @@ def contact():
     return render_template('contact.html')
 
 
-
-
 @app.route("/tutorial", methods = ['Post', 'Get'])
 def tutorials():
     return render_template("tutorial.html")
 
-@app.route('/download')
-def download():
-    pass
-    
 
 if __name__ == '__main__':
     app.run()
