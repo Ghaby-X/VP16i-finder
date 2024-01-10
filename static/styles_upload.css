@@ -57,6 +57,10 @@ color: white;
 border-radius: 100px;
 }
 
+.error_message {
+  color: red;
+}
+
 
 .container {
 max-width: 100%;

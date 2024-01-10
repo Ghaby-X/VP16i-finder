@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, current_app
 import numpy as np
 import os
 import pickle
+import logging
 
 from rdkit import Chem
 from rdkit.Chem import AllChem, Draw
@@ -31,7 +32,9 @@ def create_model(type):
 
 app = Flask(__name__)
 app.config['STATIC_FOLDER'] = 'static'
-
+handler = logging.FileHandler("test.log")
+app.logger.addHandler(handler)
+app.logger.setLevel(logging.DEBUG)
 
 
 @app.route('/')
@@ -48,10 +51,16 @@ def results():
         smile = request.form.get('smile')
         model_type = request.form.get('model')
 
+
         mol = Chem.MolFromSmiles(smile)
+        error = mol == None
+        if error:
+            return render_template("upload.html", error = error)
+        
         data = compute_morganfps(mol)
 
-
+        
+        
         #Saving the image to the directory --->> /static/Image/mol_image.png
         filepath = os.path.join(app.config['STATIC_FOLDER'], 'Image', "mol_image.png")
         try:
@@ -61,7 +70,10 @@ def results():
         
         model = create_model(model_type)
         
-        activity = model.predict(data)
+        try:
+            activity = model.predict(data)
+        except:
+            return "not a valid smile2"
         if activity == 1:
             activity =  "Active" 
             confidence = model.predict_proba(data)[0][1]

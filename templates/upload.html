@@ -37,9 +37,14 @@
                     <h3>Prediction for a single molecule</h3>
                 </div>
 
+                
                 <div class = "containerbody">
                     <form method="POST" action="/results">
                         <h4>Upload Molecule (<a href="javascript:void(0);" onclick="insertSmiles()">example</a>)</h4>
+                        {% if error == True%}
+                        <p class = "error_message">Smile is invalid</p>
+                        {% endif %}
+                        
                         <label for="model">
                             <select name="model" id="model" class="input-field">
                                 <option value="RFC">RFC</option>
