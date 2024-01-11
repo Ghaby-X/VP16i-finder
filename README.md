@@ -51,6 +51,11 @@ for multiple molecule prediction;
 2. Click on choose file and upload a csv containing your canonical smiles. Your csv must conform to the structure provided in example.csv
 3. Click on submit
 
+
+
+
+
 ## Visual representation of the project
 
-![vp16](https://github.com/Ghaby-X/VP16-inhibitors-pred/assets/105595126/4869f701-9063-4fea-ba24-0b2518277c54)
+https://github.com/Ghaby-X/VP16i-finder/assets/105595126/69500b84-95f0-4c85-986f-bc9db1a32a74
+
