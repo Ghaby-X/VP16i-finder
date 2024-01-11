@@ -2,7 +2,7 @@
 
 ## A web interface for predictive models of VP16 inhibitors built using flask
 
-This project provides an interface for preictive models that has been developed to predict the inhibition activity of VP16. It takes in a Canonical smile as input and returns an activity class and the confidence score of the predictive models.
+This project provides an interface for preictive models that has been developed to predict the inhibition activity of VP16. VP16 is a transactivator viral protein in the the herpes simplex various which contributes to the transcription of immediate early genes in the virus lifecycle. This project takes in a Canonical smile as input and returns an activity class and the confidence score of the predictive models.
 
 The models were built on the dataset provided by PubChem AID 651615.
 
@@ -58,4 +58,8 @@ for multiple molecule prediction;
 ## Visual representation of the project
 
 https://github.com/Ghaby-X/VP16i-finder/assets/105595126/69500b84-95f0-4c85-986f-bc9db1a32a74
+
+
+## Project Challenges
+The models were built as prediction for inhibitors of VP16, however in the experiment performed, the protein used was a chimeric protein of GAL4-BDB and VP16 TAD. This implies the specificity of the models in the prediction of VP16 would be low.
 
