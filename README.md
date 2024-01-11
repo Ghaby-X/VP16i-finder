@@ -52,3 +52,5 @@ for multiple molecule prediction;
 3. Click on submit
 
 ## Visual representation of the project
+
+![vp16](https://github.com/Ghaby-X/VP16-inhibitors-pred/assets/105595126/4869f701-9063-4fea-ba24-0b2518277c54)
