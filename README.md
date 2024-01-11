@@ -11,15 +11,19 @@ The models were built on the dataset provided by PubChem AID 651615.
 To run this project, you would have to have python installed and follow the steps below;
 
 1. Clone the project in your preferred directory
-2. Navigate to project folder
-3. activate the virtual environment
+   ```
+   git clone 
+   ```
+3. 
+4. Navigate to project folder
+5. activate the virtual environment
 for cmd or powershell
 code -> venv\Scripts\activate
-4. Install the libraries in requirement.txt file
+6. Install the libraries in requirement.txt file
 pip install -r requirements.txt
-5. Run the following code to start the project
+7. Run the following code to start the project
 flask run
-6. Go to the link showing on your terminal
+8. Go to the link showing on your terminal
 
 ## Usage
 for single molecule prediction,
