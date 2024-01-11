@@ -11,19 +11,34 @@ The models were built on the dataset provided by PubChem AID 651615.
 To run this project, you would have to have python installed and follow the steps below;
 
 1. Clone the project in your preferred directory
+   
    ```
-   git clone 
+   git clone https://github.com/Ghaby-X/VP16i-finder.git
    ```
-3. 
-4. Navigate to project folder
-5. activate the virtual environment
-for cmd or powershell
-code -> venv\Scripts\activate
+2. Navigae to the project folder
+
+   ```
+   cd VP16i-finder
+   ```
+   
+3. activate virtual environment
+
+   ```
+   venv\Scripts\activate
+   ```
+
 6. Install the libraries in requirement.txt file
-pip install -r requirements.txt
-7. Run the following code to start the project
-flask run
-8. Go to the link showing on your terminal
+   ```
+   pip install -r requirements.txt
+   ```
+   
+8. Run the following code to start the project
+   
+   ```
+   flask run
+   ```
+   
+9. Go to the link showing on your terminal
 
 ## Usage
 for single molecule prediction,
