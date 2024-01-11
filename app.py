@@ -77,9 +77,11 @@ def results():
         if activity == 1:
             activity =  "Active" 
             confidence = model.predict_proba(data)[0][1]
+            confidence = '{:.4f}'.format(confidence)
         else:
             activity =  "Inactive"
             confidence = model.predict_proba(data)[0][0]
+            confidence = '{:.4f}'.format(confidence)
 
 
         try:
