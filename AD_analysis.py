@@ -5,7 +5,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-import utils
+import AD_utils
 
 class AD:
     #Initialization of this class takes in three parameters
@@ -23,7 +23,7 @@ class AD:
                 raise TypeError("'base' should be an array for a base_type of 'smiles'")
             
             #if an array, let's compute descriptors and save as ExplicitBitVect
-            fps = utils.compute_morganfps(self.base)
+            fps = AD_utils.compute_morganfps(self.base)
             self.base = fps
         
         if(self.base_type == "fingerprint"):
@@ -49,7 +49,7 @@ class AD:
         
         for i in range(len(self.base)):
             for j in range(i, len(self.base)):
-                array[i][j] = utils.get_tanimomto_similarities(self.base[i], self.base[j])
+                array[i][j] = AD_utils.get_tanimomto_similarities(self.base[i], self.base[j])
                 array[j][i] = array[i][j]
         
         if (heatmap):
@@ -75,29 +75,34 @@ class AD:
             raise TypeError('test must be of type "list" or "string"')
         
         #return the similarity of your test to base
-        testbitVect = utils.compute_morganfps(test)
+        testbitVect = AD_utils.compute_morganfps(test)
 
         answer_array = []
 
         for i in testbitVect:
-            similarities = utils.get_bulk_tanimoto_distance(i, self.base)
+            similarities = AD_utils.get_bulk_tanimoto_distance(i, self.base)
             answer_array.append(max(similarities))
 
         return answer_array
 
     #plotting distance against compound ID
-    def plot_distance(self, test, threshold = None, additional_info = None):
+    def plot_distance(self, test, threshold = None, input_info = None):
         if (not isinstance(threshold, (float, int)) and not threshold == None):
             raise TypeError('threshold must be of type integer')
-
+        
         def dist(p):
             return 1-p
+
+        #additional info is a type smile
+        #converting it to find its distance.
+        input_dist = list(map(dist, self.get_similarity(input_info)))
+
         distance = list(map(dist, self.get_similarity(test)))
         fig, ax = plt.subplots()
 
         sns.scatterplot(distance, ax=ax, color='orange', alpha = 0.5, label='test-data')
-        if additional_info:
-            sns.scatterplot(x = [300], y=[additional_info], color='blue', ax=ax, label='input')
+        if input_info:
+            sns.scatterplot(x = [300], y=[input_dist[0]], color='blue', ax=ax, label='input')
             pass
         ax.set_title('Applicability domain')
         ax.set_xlabel('Compound ID')
