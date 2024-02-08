@@ -47,7 +47,8 @@
       
           <div class = "image">
               <!--<img src="data:image/png;base64,{{ img_data }}" alt="2D Structure">-->
-              <img src="{{ url_for('static', filename='Image/mol_image.png') }}">
+              <img src="{{ url_for('static', filename='Image/mol_image.png') }}"/>
+              <img src="{{'data:image/png;base64,' + encoded_img}}"/>
       
           </div>
     </div>
