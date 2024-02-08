@@ -1,17 +1,35 @@
 from flask import Flask, render_template, request, current_app
 
 import numpy as np
+import pandas as pd
 import os
 import pickle
 import logging
+import io
+import base64
 
 from rdkit import Chem
 from rdkit.Chem import AllChem, Draw
+import matplotlib.pyplot as plt
 
 from myfunctions import compute_morganfps
 from myfunctions import morgan_csv, rfc_csv_result
 from myfunctions import format_smiles
 
+import AD_analysis
+
+app = Flask(__name__)
+app.config['STATIC_FOLDER'] = 'static'
+handler = logging.FileHandler("test.log")
+app.logger.addHandler(handler)
+app.logger.setLevel(logging.DEBUG)
+
+#processing for applicability domain
+train_data = pd.read_csv('./dataset/Final_train_dataset.csv')['Canonical_SMILES'].to_list()
+test_data = pd.read_csv('./dataset/Final_test_dataset.csv')['Canonical_SMILES'].to_list()
+
+
+ad_plot = AD_analysis.AD(train_data)
 
 
 def create_model(type):
@@ -30,11 +48,7 @@ def create_model(type):
     return model
 
 
-app = Flask(__name__)
-app.config['STATIC_FOLDER'] = 'static'
-handler = logging.FileHandler("test.log")
-app.logger.addHandler(handler)
-app.logger.setLevel(logging.DEBUG)
+
 
 
 @app.route('/')
@@ -83,9 +97,17 @@ def results():
             confidence = model.predict_proba(data)[0][0]
             confidence = '{:.4f}'.format(confidence)
 
+        
+        #generating and displaying applicability domain picture
+        fig, ax = ad_plot.plot_distance(test_data, threshold=0.04, input_info=smile)
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png')
+
+        buffer.seek(0)
+        encoded_image = base64.b64encode(buffer.getvalue()).decode()
 
         try:
-            return render_template("result.html", smile = smile, activity = activity, confidence = confidence)
+            return render_template("result.html", smile = smile, activity = activity, confidence = confidence, encoded_img = encoded_image)
         except:
             return "can't process image"
     else:
