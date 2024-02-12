@@ -95,25 +95,36 @@ class AD:
 
         #additional info is a type smile
         #converting it to find its distance.
-        input_dist = list(map(dist, self.get_similarity(input_info)))
+        input_distance = list(map(dist, self.get_similarity(input_info)))
 
+        #generating distance from calculated similarity
         distance = list(map(dist, self.get_similarity(test)))
         fig, ax = plt.subplots()
 
+        #plot of distance
         sns.scatterplot(distance, ax=ax, color='orange', alpha = 0.5, label='test-data')
-        if input_info:
-            sns.scatterplot(x = [300], y=[input_dist[0]], color='blue', ax=ax, label='input')
-            pass
-        ax.set_title('Applicability domain')
-        ax.set_xlabel('Compound ID')
-        ax.set_ylabel('Tanimoto distance')
-        
 
+        #input info is any additional points that should be plotted on the base distribution
+        if input_info:
+            sns.scatterplot(x = [300], y=[input_distance[0]], color='blue', ax=ax, label='input')
+        
+        
+        #plot threshold if threshold value is given
         if(threshold):
             plt.axhline(y=threshold, color='r', linestyle='-', linewidth=2, label = 'threshold')
 
+            #boolean to show which distances are in the threshold
+            isWithin = list(map(lambda p: p < threshold, input_distance))
+        else:
+            isWithin = None
+
+
+        ax.set_title('Applicability domain')
+        ax.set_xlabel('Compound ID')
+        ax.set_ylabel('Tanimoto distance')
         ax.legend()
-        return fig, ax
+
+        return fig, ax, isWithin
 
         
 

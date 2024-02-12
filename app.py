@@ -48,9 +48,6 @@ def create_model(type):
     return model
 
 
-
-
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -99,7 +96,7 @@ def results():
 
         
         #generating and displaying applicability domain picture
-        fig, ax = ad_plot.plot_distance(test_data, threshold=0.04, input_info=smile)
+        fig, ax, withinAD = ad_plot.plot_distance(test_data, threshold=0.04, input_info=smile)
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
 
@@ -107,7 +104,7 @@ def results():
         encoded_image = base64.b64encode(buffer.getvalue()).decode()
 
         try:
-            return render_template("result.html", smile = smile, activity = activity, confidence = confidence, encoded_img = encoded_image)
+            return render_template("result.html", smile = smile, activity = activity, confidence = confidence, encoded_img = encoded_image, isWithin = withinAD[0])
         except:
             return "can't process image"
     else:
