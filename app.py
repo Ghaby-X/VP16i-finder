@@ -13,7 +13,7 @@ from rdkit.Chem import AllChem, Draw
 import matplotlib.pyplot as plt
 
 from myfunctions import compute_morganfps
-from myfunctions import morgan_csv, rfc_csv_result
+from myfunctions import morgan_csv, csv_result
 from myfunctions import format_smiles
 
 import AD_analysis
@@ -47,6 +47,12 @@ def create_model(type):
     
     return model
 
+
+@app.route('/tests', methods = ['Post', 'Get'])
+def test():
+    smile = ['CNC1=C(N=CC=C1)C=NNC(=S)N', 'CCN(CC)C1=CC(=[N+]2CCCC2)CC(C1)(C)C.[I-]', 'CCN(CC)C1=CC(=[N+]2CCCC2)CC(C1)(C)C.[I-]']
+    fig, ax, isad = ad_plot.plot_distance(test_data, threshold=0.04, input_info=smile)
+    return isad
 
 @app.route('/')
 def home():
@@ -114,13 +120,21 @@ def results():
 @app.route('/results_csv', methods = ['Post', 'Get'])
 def results_csv():
     if request.method == "POST":
+        #get csv file and model to use from request object
         file = request.files["smile_csv"]
         model_type = request.form.get('model')
 
+        #select model type to use
         model = create_model(model_type)
+
+        
         
         descriptors, smiles = morgan_csv(file)
-        df_table = rfc_csv_result(descriptors, smiles, model)
+
+        #is Within
+        _, _, isWithin = ad_plot.plot_distance(test_data, threshold=0.04, input_info=list(smiles))
+
+        df_table = csv_result(descriptors, smiles, model, isWithin)
 
         
         styled_df = df_table.style  \

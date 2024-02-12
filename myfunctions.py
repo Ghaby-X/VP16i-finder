@@ -3,7 +3,6 @@ from rdkit.Chem import AllChem
 import numpy as np
 import pandas as pd
 
-
 #calculate morgan fingerprints for a single input
 def compute_morganfps(mol):
     fps = AllChem.GetMorganFingerprintAsBitVect(mol, radius=2, nBits=2048)  # Calculate Morgan fingerprints
@@ -41,16 +40,18 @@ def morgan_csv(df_csv):
     return morgan_fps(mols), data[0]
 
 #compute rfc for a csv file
-def rfc_csv_result(descriptors, data, model):
+def csv_result(descriptors, data, model, isWithin):
 
     activity = model.predict(descriptors)
     pred_proba = model.predict_proba(descriptors)
 
     smiles = data
+
+    #get confidence scores from models
     confidence = pred_proba[np.arange(len(activity)), activity]
 
-    column = ['Canonical Smiles', 'Activity', 'Confidence']
-    dataframe = {'Canonical Smiles': smiles, 'Activity': activity, "Confidence": confidence}
+    #column = ['Canonical Smiles', 'Activity', 'Confidence', 'Within AD']
+    dataframe = {'Canonical Smiles': smiles, 'Activity': activity, "Confidence": confidence, 'Within AD': isWithin}
     
     df = pd.DataFrame(dataframe)
 

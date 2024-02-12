@@ -72,7 +72,7 @@ class AD:
         elif(isinstance(test, str)):
             test = [test]
         else:
-            raise TypeError('test must be of type "list" or "string"')
+            raise TypeError('test must be of type "list" or "string"', type(test))
         
         #return the similarity of your test to base
         testbitVect = AD_utils.compute_morganfps(test)
