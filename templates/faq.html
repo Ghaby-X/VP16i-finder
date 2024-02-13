@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Herpes-finder</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tutorial.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_faq.css') }}">
 </head>
 
 
@@ -24,11 +24,52 @@
     <hr>
 
     <div class = "content">
-        <h2>frequently asked questions</h3>
-        
-        <section class="single">
-          
-        </section>
+        <div class="question">
+            <p><strong>Q1. What is Herpes-finder?</strong></p>
+            <p>Herpes-finder is a webserver that is capable of predicting the inhibitory activity of compounds in their smile notation against herpes simplex virus viral protein 16</p>
+        </div>
+        <div class="question">
+            <p><strong>Q2. How does Herpes-finder work?</strong></p>
+            <p>It works as follows</p>
+            <ul>
+                <li>
+                    It receives either a single or batch query input alongside the type of model to use from the user via the input interface
+                </li>
+                <li>
+                    In server logic, it computes morgan fingerprints from the input smile notation and feed them to pre-trained machine learning models for predicting inhibitors of herpes
+                </li>
+                <li>
+                    It displays the activity and confidence of each prediction
+                </li>
+            </ul>
+            <p>See <a href="/tutorial">tutorial</a> section to know how to use Herpes-finder</p>
+        </div>
+        <div class="question">
+            <p><strong>Q3. What does it mean for a compound to be within AD?</strong></p>
+            <p>Applicability domain defines the region or chemical space for which our model predictions is reliable. A compound in the applicability domain means, the compound is similar to our training compounds thus the model prediction is reliable</p>
+        </div>
+        <div class="question">
+            <p><strong>Q4. Why is my list of molecules prediction throwing an Error?</strong></p>
+            <p>If prediction for batch compounds show an error, check the following ?</p>
+            <ul>
+                <li>Ensure the csv file do not contain any headers or title</li>
+                <li>Ensure the smiles present in the csv are valid</li>
+                <li>Ensure the smiles are arranged in a single column</li>
+                <li>Ensure the smiles are continuous. i.e., there should be no empty entry between two smiles input</li>
+            </ul>
+        </div>
+        <div class="question">
+            <p><strong>Q5. Can I download prediction results from Herpes-finder?</strong></p>
+            <p>Yes, you can download the prediction results. To download, click on the download button at the top-left of the results and the download should begin</p>
+        </div>
+        <div class="question">
+            <p><strong>Q6. Will there be any feature updates or modifications to Herpes-finder?</strong></p>
+            <p>Yes, we would like to enhance the capabilities of Herpes-finder predictions by retraining model with more dataset.</p>
+        </div>
+        <div class="question">
+            <p><strong>Q7. Where can I send further questions?</strong></p>
+            <p>Further questions can be sent through the <a href="/contact">contacts</a> section</p>
+        </div>
     </div>
 
 </body>
